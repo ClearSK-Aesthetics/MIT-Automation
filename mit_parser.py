@@ -7,17 +7,39 @@ from datetime import datetime
 pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR"
 def detect_document_nature(text):
     text_upper = text.upper()
-    if "SOA" in or"STATEMENT OF ACCOUNT" in text_upper:
-        return "SOA"
+    if "SOA" in text_upper:
+        return "PV-Payment"
+    if "STATEMENT OF ACCOUNT" in text_upper:
+        return"PV-Payment"
     if "INVOICE" in text_upper:
         return "PV-Payment"
     if "RECEIPT" in text_upper:
         return "PV-Receipt"
     if "CREDIT NOTE" in text_upper:
-        return "PV-Credit Note"
+        return "PV-Receipt"
+    return 
+def detect_document_type(text):
+    text_upper = text.upper()
+    if "SOA" in text_upper or"STATEMENT OF ACCOUNT" in text_upper:
+        return "SOA"
+    if "INVOICE" in text_upper:
+        return "PV-Payment","SUPLIER INVOICE"
+    if "RECEIPT" in text_upper:
+        return "PV-Receipt","RECEIPT"
+    if "CREDIT NOTE" in text_upper:
+        return "PV-Payment","SUPPLIER INVOICE"
 
-    return "PV-Payment" # default
-doc_nature = detect_document_nature(text
+    return "PV-Payment","SUPPLIER INVOICE" # default
+
+doc_nature, doc_category = detect_document_nature(text)
+
+return {
+...
+    "Document Nature": doc_nature,
+    "Document Category": doc_category,
+    ...
+}
+
         
     
 
