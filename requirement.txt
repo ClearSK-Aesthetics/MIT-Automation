@@ -1,1 +1,7 @@
-
+gradio
+pandas
+openpyxl
+pytesseract
+pdf2image
+Pillow
+Python-dotenv
