@@ -21,7 +21,7 @@ MIT_COLUMNS =[
 def generate_mit_excel(data_dict):
 
     row_data = {
-        "Receipt Date": data_dict.get("Receipt Date", ""),
+        "Receipt Date Stamped": data_dict.get("Receipt Date", ""),
         "Date of Input": data_dict.get("Date of Input", ""),
         "Date of Document": data_dict.get("Date of Document", ""),
         "Due Date (If Applicable)": data_dict.get("Due Date (If Applicable)", ""),
@@ -32,7 +32,7 @@ def generate_mit_excel(data_dict):
         "Invoice #": data_dict.get("Invoice #", ""),
         "Tracking Number": "",
         "Invoice Amount": data_dict.get("Invoice Amount", ""),
-        "GST (if any)": "",
+        "GST (IF ANY)": "",
         "Amount ($) Exc GST": "",
         "PIC": data_dict.get("PIC", ""),
         "URL LINK": ""
