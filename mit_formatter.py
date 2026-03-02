@@ -42,29 +42,34 @@ def _normalize_date_ddmmyyyy(value: str)-> str:
     return s #fallback: keep raw if cannot parse 
   
 
-def generate_mit_excel(data_dict):
-
-    row_data = {
-        "Receipt Date Stamped": data_dict.get("Receipt Date", ""),
-        "Date of Input": data_dict.get("Date of Input", ""),
-        "Date of Document": data_dict.get("Date of Document", ""),
-        "Due Date (If Applicable)": data_dict.get("Due Date (If Applicable)", ""),
-        "Sender Name": data_dict.get("Sender Name", ""),
-        "Document Nature": "PV-Payment",
-        "Document Category": "SUPPLIER INVOICE",
-        "Description": data_dict.get("Description", ""),
-        "Invoice #": data_dict.get("Invoice #", ""),
-        "Tracking Number": "",
-        "Invoice Amount": data_dict.get("Invoice Amount", ""),
-        "GST (IF ANY)": "",
-        "Amount ($) Exc GST": "",
-        "PIC": data_dict.get("PIC", ""),
-        "URL LINK": ""
+def generate_mit_excel(data_dict: dict, output_files: str ="MIT_Output.xlsx") -> str:
+  """
+  Enforces strict MIT columns order and headers.
+  data_dict should use the SAME keys as MIT_COLUMNS (recommend). 
+  Any missing fields will be filled as empty string.
+  """
+  row_data = {
+    "Receipt Date Stamped": data_dict.get("Receipt Date", ""),
+    "Date of Input": data_dict.get("Date of Input", ""),
+    "Date of Document": data_dict.get("Date of Document", ""),
+    "Due Date (If Applicable)": data_dict.get("Due Date (If Applicable)",data_dict.get("Due Date (If Applicable)", "")),
+    "Sender Name":data_dict.get("Sender Name",""),
+    # These can be auto-filled, or override from data_dict if you want
+    "Document Nature": data_dict.get("Document Nature", "PV-Payment"),
+    "Document Category": data_dict.get("Document Category", "SUPPLIER INVOICE"),
+    "Description": data_dict.get("Description", ""),
+    "Invoice #": data_dict.get("Invoice #", ""),
+    "Tracking Number": data_dict.get("Tracking Number", ""),
+    "Invoice Amount": data_dict.get("Invoice Amount", data_dict.get("Invoice Amount", "")),
+    "GST (IF ANY)": data_dict.get("GST( IF ANY)", data_dict.get("GST (if any)", "")),
+    "Amount ($) Exc GST": data_dict.get("Amount($) Exc GST", data_dict.get("Amount ($) Exc GST", "")),
+    "PIC": data_dict.get("PIC", ""),
+    "URL LINK": data.dict.get("URL LINK",""),
     }
+    for c in DATE_COLUMNS:
+      row_data[c]= _normalize_date_ddmmyyy(row_data.get(c,""))
 
-    df = pd.DataFrame([row_data], columns=MIT_COLUMNS)
+    df = pd.DataFrame([[row_data.get(col,"") for col in MIT_COLUMNS]], columns=MIT_COLUMNS)
 
-    output_file = "MIT_Output.xlsx"
     df.to_excel(output_file, index=False)
-
     return output_file
