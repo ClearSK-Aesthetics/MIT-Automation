@@ -14,8 +14,8 @@ MIT_COLUMNS =[
   "Tracking Number",
   "Invoice amount",
   "GST( IF ANY)",
-  "aMOUNT($) Exc GST",
-  "pic",
+  "Amount($) Exc GST",
+  "PIC",
   "URL LINK"]
 
 def generate_mit_excel(data_dict):
