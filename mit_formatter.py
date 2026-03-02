@@ -17,6 +17,30 @@ MIT_COLUMNS =[
   "Amount($) Exc GST",
   "PIC",
   "URL LINK"]
+DATE_COLUMNS = {
+  "Receipt Date Stamped",
+  "Date of Input",
+  "Date of Document",
+  "Due Date(IF applicable)",
+}
+
+def _normalize_date_ddmmyyyy(value: str)-> str:
+  """
+  Normalize to DD/MM/YYYY for Excel consistency.
+  Accepts '14/04/2025', '15/4/2025', '2025-04-15', or already-clean strings.
+  """
+  if value is None:
+    return ""
+  s =str(value).strip()
+  if not s:
+    return ""
+  # Try dd/mm/yyyy(allow 1-2 digits)
+  try:
+    dt=pd.to_datetime(s, dayfirst=True, errors="raise")
+    return dt.srftime("%d/%m/%Y")
+  except Excepting:
+    return s #fallback: keep raw if cannot parse 
+  
 
 def generate_mit_excel(data_dict):
 
