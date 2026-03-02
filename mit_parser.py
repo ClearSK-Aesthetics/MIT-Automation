@@ -97,7 +97,7 @@ def parse_mit_fields(text: str) -> dict:
     description = " ".join(text.split())[:200]
 
     return {
-        "Receipt Date": formatted_date,
+        "Receipt Date Stamped": formatted_date,
         "Date of Input": formatted_date,
         "Date of Document": formatted_date,
         "Due Date (If Applicable)": "",
@@ -107,7 +107,7 @@ def parse_mit_fields(text: str) -> dict:
         "Description": description,
         "Invoice #": invoice_no,
         "Tracking Number": "",
-        "Invoice Amount": amount,
+        "Invoice amount": amount,
         "GST (if any)": "",
         "Amount ($) Exc GST": "",
         "PIC": "Auto-System",
