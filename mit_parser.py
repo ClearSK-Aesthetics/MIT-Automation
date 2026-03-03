@@ -1,13 +1,16 @@
 import pytesseract
-from pdf2image import convert_from_path
+from pdf2image import convert_from_path, conver_from_bytes
 import re
 from datetime import datetime
+import sys
+import pytesseract
 
 # ✅ MUST point to the exe, not folder
-pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+if sys.platform.startswith("win"):
+    pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
 
-def detect_document_type(text: str):
+def detect_document_type(pdf_path:str) -> str:
     """
     Returns (Document Nature, Document Category)
     Based on keyword detection from OCR text.
